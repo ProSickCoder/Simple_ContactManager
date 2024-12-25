@@ -352,3 +352,154 @@ private:
              << "Address: " << contact.getAddress() << endl;
     }
 };
+int main() {
+    // Set console output to handle special characters properly
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    ContactManager manager;
+    char choice;
+    bool running = true;
+
+    // Function to clear screen (platform independent)
+    auto clearScreen = []() {
+        #ifdef _WIN32
+            system("cls");
+        #else
+            system("clear");
+        #endif
+    };
+
+    // Function to display menu
+    auto displayMenu = []() {
+        cout << "\n=== Contact Manager v2.0 ===\n"
+             << "┌────────────────────────┐\n"
+             << "│ 1. Add Contact         │\n"
+             << "│ 2. Edit Contact        │\n"
+             << "│ 3. Delete Contact      │\n"
+             << "│ 4. Search Contacts     │\n"
+             << "│ 5. Display All         │\n"
+             << "│ 6. Sort Contacts       │\n"
+             << "│ 7. Export to CSV       │\n"
+             << "│ 8. Import from CSV     │\n"
+             << "│ 9. Exit                │\n"
+             << "└────────────────────────┘\n"
+             << "Enter your choice (1-9): ";
+    };
+
+    // Main program loop
+    while (running) {
+        try {
+            displayMenu();
+            
+            // Get user input with validation
+            if (!(cin >> choice)) {
+                cin.clear(); // Clear error flag
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw runtime_error("Invalid input! Please enter a number between 1-9.");
+            }
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            // Process user choice
+            switch (choice) {
+                case '1': {
+                    clearScreen();
+                    cout << "\n=== Add New Contact ===\n";
+                    manager.addContact();
+                    cout << "\nPress Enter to continue...";
+                    cin.get();
+                    break;
+                }
+                
+                case '2': {
+                    clearScreen();
+                    cout << "\n=== Edit Contact ===\n";
+                    manager.editContact();
+                    cout << "\nPress Enter to continue...";
+                    cin.get();
+                    break;
+                }
+                
+                case '3': {
+                    clearScreen();
+                    cout << "\n=== Delete Contact ===\n";
+                    manager.deleteContact();
+                    cout << "\nPress Enter to continue...";
+                    cin.get();
+                    break;
+                }
+                
+                case '4': {
+                    clearScreen();
+                    cout << "\n=== Search Contacts ===\n";
+                    manager.searchContacts();
+                    cout << "\nPress Enter to continue...";
+                    cin.get();
+                    break;
+                }
+                
+                case '5': {
+                    clearScreen();
+                    cout << "\n=== All Contacts ===\n";
+                    manager.displayContacts();
+                    cout << "\nPress Enter to continue...";
+                    cin.get();
+                    break;
+                }
+                
+                case '6': {
+                    clearScreen();
+                    cout << "\n=== Sort Contacts ===\n";
+                    manager.sortContacts();
+                    cout << "\nPress Enter to continue...";
+                    cin.get();
+                    break;
+                }
+                
+                case '7': {
+                    clearScreen();
+                    cout << "\n=== Export to CSV ===\n";
+                    // Implementation for CSV export would go here
+                    cout << "Feature coming soon!\n";
+                    cout << "\nPress Enter to continue...";
+                    cin.get();
+                    break;
+                }
+                
+                case '8': {
+                    clearScreen();
+                    cout << "\n=== Import from CSV ===\n";
+                    // Implementation for CSV import would go here
+                    cout << "Feature coming soon!\n";
+                    cout << "\nPress Enter to continue...";
+                    cin.get();
+                    break;
+                }
+                
+                case '9': {
+                    cout << "\nSaving changes...\n";
+                    running = false;
+                    cout << "Thank you for using Contact Manager!\n";
+                    break;
+                }
+                
+                default: {
+                    cout << "\nInvalid choice! Please enter a number between 1-9.\n";
+                    cout << "Press Enter to continue...";
+                    cin.get();
+                    break;
+                }
+            }
+            
+            clearScreen();
+        }
+        catch (const exception& e) {
+            cerr << "\nError: " << e.what() << endl;
+            cout << "Press Enter to continue...";
+            cin.get();
+            clearScreen();
+        }
+    }
+
+    return 0;
+}
